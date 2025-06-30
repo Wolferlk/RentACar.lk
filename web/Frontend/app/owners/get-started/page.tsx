@@ -8,7 +8,7 @@ import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
-import { DollarSign, Shield, TrendingUp, CheckCircle, Upload, MapPin, Camera, FileText, Sparkles } from "lucide-react"
+import { DollarSign, Shield, TrendingUp, CheckCircle, Upload, MapPin, Camera, FileText, Sparkles, ArrowRight, ArrowLeft } from "lucide-react"
 
 export default function OwnersGetStartedPage() {
   const [currentStep, setCurrentStep] = useState(1)
@@ -63,6 +63,18 @@ export default function OwnersGetStartedPage() {
       description: "Complete verification process",
     },
   ]
+
+  const nextStep = () => {
+    if (currentStep < totalSteps) {
+      setCurrentStep(currentStep + 1)
+    }
+  }
+
+  const prevStep = () => {
+    if (currentStep > 1) {
+      setCurrentStep(currentStep - 1)
+    }
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-orange-50 via-white to-orange-100">
@@ -261,7 +273,7 @@ export default function OwnersGetStartedPage() {
                       <h4 className="text-lg font-semibold text-gray-800 mb-4">Vehicle Photos</h4>
                       <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
                         {["Front", "Back", "Interior", "Dashboard", "Engine", "Side"].map((angle) => (
-                          <div key={angle} className="border-2 border-dashed border-orange-300 rounded-lg p-6 text-center hover:border-orange-400 transition-colors">
+                          <div key={angle} className="border-2 border-dashed border-orange-300 rounded-lg p-6 text-center hover:border-orange-400 transition-colors cursor-pointer">
                             <Camera className="w-8 h-8 text-orange-500 mx-auto mb-2" />
                             <p className="text-sm font-medium text-gray-700">{angle} View</p>
                             <p className="text-xs text-gray-500 mt-1">Click to upload</p>
@@ -282,7 +294,7 @@ export default function OwnersGetStartedPage() {
                           <div key={doc} className="border-2 border-dashed border-orange-300 rounded-lg p-4 text-center hover:border-orange-400 transition-colors">
                             <FileText className="w-6 h-6 text-orange-500 mx-auto mb-2" />
                             <p className="text-sm font-medium text-gray-700">{doc}</p>
-                            <Button variant="outline" size="sm" className="mt-2 border-orange-300 text-orange-600 bg-transparent">
+                            <Button variant="outline" size="sm" className="mt-2 border-orange-300 text-orange-600 hover:bg-orange-50">
                               <Upload className="w-4 h-4 mr-1" />
                               Upload
                             </Button>
@@ -349,11 +361,111 @@ export default function OwnersGetStartedPage() {
                           {["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"].map((day) => (
                             <div key={day} className="text-center">
                               <p className="text-sm font-medium text-gray-700 mb-2">{day}</p>
-                              <input type="checkbox" className="w-5 h-5 text-orange-500" defaultChecked />
+                              <input type="checkbox" className="w-5 h-5 text-orange-500 rounded border-orange-300 focus:ring-orange-500" defaultChecked />
                             </div>
                           ))}
                         </div>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                           <div className="space-y-2">
                             <label className="text-sm font-medium text-gray-700">Available From</label>
-                            <Input type="time" className="border-orange-200 focus:border-orange-400\
+                            <Input type="time" className="border-orange-200 focus:border-orange-400" defaultValue="08:00" />
+                          </div>
+                          <div className="space-y-2">
+                            <label className="text-sm font-medium text-gray-700">Available Until</label>
+                            <Input type="time" className="border-orange-200 focus:border-orange-400" defaultValue="18:00" />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </motion.div>
+              )}
+
+              {currentStep === 4 && (
+                <motion.div variants={fadeInUp} initial="initial" animate="animate">
+                  <h3 className="text-2xl font-bold text-gray-800 mb-6">Verification & Final Steps</h3>
+                  <div className="space-y-8">
+                    <div className="text-center">
+                      <div className="w-20 h-20 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <CheckCircle className="w-10 h-10 text-orange-500" />
+                      </div>
+                      <h4 className="text-xl font-semibold text-gray-800 mb-2">Almost Done!</h4>
+                      <p className="text-gray-600 mb-6">
+                        We'll review your listing and get back to you within 24 hours.
+                      </p>
+                    </div>
+
+                    <div className="bg-orange-50 p-6 rounded-lg">
+                      <h4 className="font-semibold text-gray-800 mb-3">What happens next?</h4>
+                      <ul className="space-y-2 text-sm text-gray-600">
+                        <li className="flex items-start">
+                          <span className="w-2 h-2 bg-orange-500 rounded-full mt-2 mr-3 flex-shrink-0"></span>
+                          Our team will verify your documents and photos
+                        </li>
+                        <li className="flex items-start">
+                          <span className="w-2 h-2 bg-orange-500 rounded-full mt-2 mr-3 flex-shrink-0"></span>
+                          You'll receive a confirmation email once approved
+                        </li>
+                        <li className="flex items-start">
+                          <span className="w-2 h-2 bg-orange-500 rounded-full mt-2 mr-3 flex-shrink-0"></span>
+                          Your car will be live on our platform and ready for bookings
+                        </li>
+                        <li className="flex items-start">
+                          <span className="w-2 h-2 bg-orange-500 rounded-full mt-2 mr-3 flex-shrink-0"></span>
+                          Start earning money from day one!
+                        </li>
+                      </ul>
+                    </div>
+
+                    <div className="space-y-4">
+                      <div className="flex items-center space-x-2">
+                        <input type="checkbox" className="w-4 h-4 text-orange-500 rounded border-orange-300 focus:ring-orange-500" />
+                        <label className="text-sm text-gray-700">
+                          I agree to the <a href="#" className="text-orange-600 hover:underline">Terms of Service</a> and <a href="#" className="text-orange-600 hover:underline">Privacy Policy</a>
+                        </label>
+                      </div>
+                      <div className="flex items-center space-x-2">
+                        <input type="checkbox" className="w-4 h-4 text-orange-500 rounded border-orange-300 focus:ring-orange-500" />
+                        <label className="text-sm text-gray-700">
+                          I confirm that all information provided is accurate and complete
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                </motion.div>
+              )}
+
+              {/* Navigation Buttons */}
+              <div className="flex justify-between mt-8 pt-6 border-t border-orange-200">
+                <Button
+                  variant="outline"
+                  onClick={prevStep}
+                  disabled={currentStep === 1}
+                  className="border-orange-300 text-orange-600 hover:bg-orange-50 disabled:opacity-50"
+                >
+                  <ArrowLeft className="w-4 h-4 mr-1" />
+                  Previous
+                </Button>
+                
+                {currentStep < totalSteps ? (
+                  <Button
+                    onClick={nextStep}
+                    className="bg-orange-500 hover:bg-orange-600 text-white"
+                  >
+                    Next Step
+                    <ArrowRight className="w-4 h-4 ml-1" />
+                  </Button>
+                ) : (
+                  <Button className="bg-orange-500 hover:bg-orange-600 text-white">
+                    Submit Listing
+                    <Upload className="w-4 h-4 ml-1" />
+                  </Button>
+                )}
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+      </section>
+    </div>
+  )
+}
